@@ -13,11 +13,12 @@ import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { RouterContext, match } from 'react-router';
 
+import { fetchPosts } from "../common/actions";
 import configureStore from '../common/store/configureStore';
 import routes from '../common/routes';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 const isDev = process.env.NODE_ENV !== 'production';
 
 const templatePath = path.join(__dirname, 'template.html');
@@ -47,28 +48,27 @@ function handleRender(req, res) {
   match({ routes: routes, location: req.url }, (error, redirectLocation, renderProps) => {
     if (error) {
       return res.status(500).send(error.message);
-    }
+    } else if (redirectLocation) {
+      return res.redirect(301, redirectLocation.pathname + redirectLocation.search)
+    } else if (renderProps) {
+      store.dispatch(fetchPosts())
+        .then(() => {
+          // render the component to a string
+          const html = renderToString(
+            <Provider store={store}>
+              <RouterContext {...renderProps} />
+            </Provider>
+          );
+          // grab the initial state from our Redux store
+          const finalState = JSON.stringify(store.getState());
 
-    if (!renderProps) {
+          // send the rendered page back to the client
+          res.status(200).send(template({ html, finalState, isDev }))
+        })
+    } else {
       return res.status(404).send('Not found');
     }
 
-    if (redirectLocation) {
-      return res.redirect(301, redirectLocation.pathname + redirectLocation.search)
-    }
-
-    // render the component to a string
-    const html = renderToString(
-      <Provider store={store}>
-        <RouterContext {...renderProps} />
-      </Provider>
-    )
-
-    // grab the initial state from our Redux store
-    const finalState = JSON.stringify(store.getState());
-
-    // send the rendered page back to the client
-    res.status(200).send(template({ html, finalState, isDev }))
   })
 }
 
