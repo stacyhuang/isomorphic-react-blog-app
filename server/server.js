@@ -13,7 +13,7 @@ import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { RouterContext, match } from 'react-router';
 
-import { fetchPosts } from "../common/actions";
+import fetchComponentData from "../common/utils/fetchComponentData";
 import configureStore from '../common/store/configureStore';
 import routes from '../common/routes';
 
@@ -38,11 +38,9 @@ app.use(express.static('dist'));
 app.use(handleRender);
 
 function handleRender(req, res) {
-  // Todo: query mock API for initial state asynchronously
-  const initialState = {};
-
-  // create a new Redux store instance
-  const store = configureStore(initialState);
+  // create a new Redux store instance (Note: the only purpose of
+  // this store instance is to provide the initial state of our app)
+  const store = configureStore();
 
   // match the routes to the url
   match({ routes: routes, location: req.url }, (error, redirectLocation, renderProps) => {
@@ -51,7 +49,7 @@ function handleRender(req, res) {
     } else if (redirectLocation) {
       return res.redirect(301, redirectLocation.pathname + redirectLocation.search)
     } else if (renderProps) {
-      store.dispatch(fetchPosts())
+      fetchComponentData(store.dispatch, renderProps.components, renderProps.params)
         .then(() => {
           // render the component to a string
           const html = renderToString(

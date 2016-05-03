@@ -1,11 +1,19 @@
 import React, { PropTypes } from 'react'
 import { connect } from "react-redux";
+import { fetchPosts } from "../actions";
 import * as actions from "../actions";
 
 class Post extends React.Component {
-  render () {
-    const { post } = this.props;
-    const { title, content } = post;
+  static loadAsyncData(dispatch) {
+    return dispatch(fetchPosts())
+  }
+
+  componentDidMount() {
+    this.constructor.loadAsyncData(this.props.dispatch)
+  }
+
+  render() {
+    const { title, content } = this.props.post;
 
     return (
       <div className="wrapper">

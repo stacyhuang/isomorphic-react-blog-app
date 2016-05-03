@@ -1,25 +1,30 @@
 import React, { PropTypes } from 'react';
 import { connect } from "react-redux";
-import { fetchPost } from "../actions";
+import { fetchPosts } from "../actions";
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 class PostList extends React.Component {
-  render () {
-    const postNodes = [];
+  static loadAsyncData(dispatch) {
+    return dispatch(fetchPosts())
+  }
 
-    this.props.posts.map((post) => {
-      postNodes.push(
-        <ListGroupItem
-          key={post.id}
-          href={`/posts/${post.id}`}>
-          { post.title }
-        </ListGroupItem>
-      )
-    });
+  componentDidMount() {
+    this.constructor.loadAsyncData(this.props.dispatch)
+  }
 
+  renderPost(post) {
+    return (
+      <LinkContainer to={`/posts/${post.id}`} key={post.id}>
+        <ListGroupItem>{ post.title }</ListGroupItem>
+      </LinkContainer>
+    )
+  }
+
+  render() {
     return (
       <ListGroup className="wrapper">
-        {postNodes}
+        {this.props.posts.map(this.renderPost)}
       </ListGroup>
     );
   }
