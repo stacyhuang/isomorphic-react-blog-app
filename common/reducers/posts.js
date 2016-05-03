@@ -1,5 +1,3 @@
-import objectAssign from "object-assign";
-
 export default function posts(state = [], action) {
   switch(action.type) {
     case "FETCH_POST_SUCCESS":
