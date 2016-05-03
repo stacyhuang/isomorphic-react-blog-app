@@ -1,7 +1,6 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import { connect } from "react-redux";
 import { fetchPosts } from "../actions";
-import * as actions from "../actions";
 
 class Post extends React.Component {
   static loadAsyncData(dispatch) {

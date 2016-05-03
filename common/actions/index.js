@@ -25,7 +25,8 @@ export function publishPost(post) {
     axios.post(`${baseUrl}/posts`, {
       id: nextPostId++,
       title: post.title,
-      content: post.content
+      content: post.content,
+      timestamp: post.timestamp
     })
       .then((response) => {
         dispatch({

@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { connect } from "react-redux";
-import { fetchPosts, publishPost } from "../actions";
+import { publishPost } from "../actions";
 import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 
 class Draft extends React.Component {
@@ -19,7 +19,9 @@ class Draft extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.dispatch(publishPost(this.state));
+    const post = this.state;
+    post.timestamp = Date.now();
+    this.props.dispatch(publishPost(post));
     this.setState({title: "", content: ""});
     this.context.router.push('/');
   }

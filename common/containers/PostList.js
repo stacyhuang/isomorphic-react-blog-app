@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { connect } from "react-redux";
+import moment from "moment";
 import { fetchPosts } from "../actions";
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -14,9 +15,12 @@ class PostList extends React.Component {
   }
 
   renderPost(post) {
+    const { title, timestamp } = post;
+    const time = moment(timestamp).fromNow();
+
     return (
       <LinkContainer to={`/posts/${post.id}`} key={post.id}>
-        <ListGroupItem>{ post.title }</ListGroupItem>
+        <ListGroupItem header={title}>Published {time}</ListGroupItem>
       </LinkContainer>
     )
   }
