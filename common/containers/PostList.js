@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import moment from "moment";
+import _ from 'lodash';
 import { fetchPosts } from "../actions";
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -34,9 +35,13 @@ class PostList extends React.Component {
   }
 }
 
+function getSortedPosts(posts) {
+  return _.orderBy(posts, ['timestamp'], ['desc']);
+}
+
 function mapStateToProps(state) {
   return {
-    posts: state.posts
+    posts: getSortedPosts(state.posts)
   };
 };
 
