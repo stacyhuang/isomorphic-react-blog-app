@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "node index.js",
-    "start": "node index.js",
-    "postinstall": "webpack --config ./webpack.config.production.js -p --color"
+    "start": "NODE_ENV=production node index.js",
+    "production": "NODE_ENV=production webpack --config webpack.config.production.js -p --color",
+    "postinstall": "npm run production"
   },
   "author": "Stacy Huang",
   "license": "MIT",
@@ -35,11 +36,11 @@
     "css-loader": "^0.23.1",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.0",
-    "extract-text-webpack-plugin": "^1.0.1"
-  },
-  "devDependencies": {
-    "json-server": "^0.8.10",
+    "extract-text-webpack-plugin": "^1.0.1",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.10.0"
+  },
+  "devDependencies": {
+    "json-server": "^0.8.10"
   }
 }

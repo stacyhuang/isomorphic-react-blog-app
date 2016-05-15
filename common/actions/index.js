@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 let nextPostId = 0;
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://json-server-rest-api.herokuapp.com';
 
 function fetchPostsFromDb(post) {
   return axios.get(`${baseUrl}/posts`)
