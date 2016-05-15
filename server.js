@@ -4,7 +4,7 @@ import express from 'express';
 import _ from 'lodash';
 
 import webpack from 'webpack';
-import webpackConfig from '../webpack.config';
+import webpackConfig from './webpack.config';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
@@ -13,9 +13,9 @@ import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { RouterContext, match } from 'react-router';
 
-import fetchComponentData from "../common/utils/fetchComponentData";
-import configureStore from '../common/store/configureStore';
-import routes from '../common/routes';
+import fetchComponentData from "./common/utils/fetchComponentData";
+import configureStore from './common/store/configureStore';
+import routes from './common/routes';
 
 const app = express();
 const port = process.env.PORT || 8000;
