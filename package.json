@@ -2,10 +2,11 @@
   "name": "blog",
   "version": "1.0.0",
   "description": "Universally-rendered blog application",
+  "main": "index.js",
   "scripts": {
-    "dev": "node server/index",
-    "start": "NODE_ENV=production node server/index",
-    "production": "NODE_ENV=production webpack --config webpack.config.production.js --progress -p --color && npm start"
+    "dev": "node index.js",
+    "start": "node index.js",
+    "postinstall": "webpack --config ./webpack.config.production.js -p --color"
   },
   "author": "Stacy Huang",
   "license": "MIT",
