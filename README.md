@@ -3,6 +3,12 @@ React blog application with server-side rendering, routing, and async actions
 
 [https://isomorphic-react-blog-app.herokuapp.com/](https://isomorphic-react-blog-app.herokuapp.com/)
 
+![image](https://farm8.staticflickr.com/7180/27040569105_d3b8ec8d62_h.jpg)
+
+
+![image](https://farm8.staticflickr.com/7657/27040499205_a64a97722b_h.jpg)
+
+
 ## Installing Dependencies
 
 ```
